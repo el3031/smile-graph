@@ -1,25 +1,26 @@
-import logo from './logo.svg';
+import ForceGraph2D from 'react-force-graph-2d';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ForceGraph2D 
+        graphData={genRandomTree()}/>
     </div>
   );
 }
+
+function genRandomTree(N = 300, reverse = false) {
+  return {
+    nodes: [...Array(N).keys()].map(i => ({ id: i })),
+      links: [...Array(N).keys()]
+    .filter(id => id)
+    .map(id => ({
+      [reverse ? 'target' : 'source']: id,
+      [reverse ? 'source' : 'target']: Math.round(Math.random() * (id-1))
+    }))
+  };
+}
+
 
 export default App;
